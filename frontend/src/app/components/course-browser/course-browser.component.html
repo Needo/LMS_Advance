@@ -1,0 +1,41 @@
+﻿<div class="app-container">
+  <app-header></app-header>
+  
+  <div class="main-content">
+    <app-sidebar 
+      [categories]="categories" 
+      (categorySelected)="filterByCategory($event)">
+    </app-sidebar>
+    
+    <div class="content-area">
+      <div class="breadcrumb">
+        <span>ðŸ  Home</span>
+        <span *ngIf="selectedCategory"> > Category</span>
+      </div>
+      
+      <h1>All Courses</h1>
+      
+      <div *ngIf="loading" class="loading">
+        <div class="spinner"></div>
+        <p>Loading courses...</p>
+      </div>
+      
+      <div *ngIf="!loading && courses.length === 0" class="no-courses">
+        <p>ðŸ“­ No courses found</p>
+        <small>Add courses by scanning your file system from the admin panel</small>
+      </div>
+      
+      <div class="courses-grid" *ngIf="!loading && courses.length > 0">
+        <div class="course-card" *ngFor="let course of courses" (click)="openCourse(course.id)">
+          <div class="course-icon">ðŸŽ“</div>
+          <h3>{{ course.title }}</h3>
+          <p>{{ course.description || 'No description available' }}</p>
+          <div class="course-meta">
+            <span>ðŸ“ {{ course.total_lessons }} lessons</span>
+            <span>â±ï¸ {{ formatDuration(course.total_duration) }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,22 @@
+﻿<div class="sidebar">
+  <div class="sidebar-section">
+    <h3>Categories</h3>
+    
+    <div 
+      class="category-item" 
+      [class.active]="selectedCategoryId === null"
+      (click)="selectCategory(null)">
+      <span class="icon">ðŸ </span>
+      <span>All Courses</span>
+    </div>
+    
+    <div 
+      *ngFor="let category of categories" 
+      class="category-item"
+      [class.active]="selectedCategoryId === category.id"
+      (click)="selectCategory(category.id)">
+      <span class="icon">{{ category.icon }}</span>
+      <span>{{ category.name }}</span>
+    </div>
+  </div>
+</div>

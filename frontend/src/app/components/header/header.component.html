@@ -1,0 +1,12 @@
+﻿<header class="header">
+  <div class="header-left">
+    <h1>LMS System</h1>
+  </div>
+  
+  <div class="header-right">
+    <span class="user-name" *ngIf="currentUser">
+      ðŸ‘¤ {{ currentUser.username }}
+    </span>
+    <button class="logout-btn" (click)="logout()">Logout</button>
+  </div>
+</header>

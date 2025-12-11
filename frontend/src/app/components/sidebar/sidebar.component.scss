@@ -1,0 +1,37 @@
+﻿.sidebar {
+  width: 250px;
+  background: #34495e;
+  color: white;
+  padding: 20px 0;
+  overflow-y: auto;
+
+  h3 {
+    padding: 0 20px;
+    margin-bottom: 15px;
+    font-size: 14px;
+    text-transform: uppercase;
+    color: #95a5a6;
+  }
+
+  .category-item {
+    padding: 12px 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: background 0.2s;
+
+    &:hover {
+      background: rgba(255,255,255,0.1);
+    }
+
+    &.active {
+      background: #3498db;
+      border-left: 4px solid #2ecc71;
+    }
+
+    .icon {
+      font-size: 1.2em;
+    }
+  }
+}
