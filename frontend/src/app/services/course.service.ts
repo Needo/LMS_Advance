@@ -1,7 +1,7 @@
 ﻿import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Course, Category } from '../models/models';
+import { Course, Category, CourseTree, ScanResult } from '../models/models';
 
 @Injectable({
   providedIn: 'root'
@@ -25,5 +25,13 @@ export class CourseService {
 
   getCourse(courseId: number): Observable<Course> {
     return this.http.get<Course>(`${this.apiUrl}/courses/${courseId}`);
+  }
+
+  getCourseTree(): Observable<CourseTree[]> {
+    return this.http.get<CourseTree[]>(`${this.apiUrl}/courses/tree`);
+  }
+
+  rescanCourses(): Observable<ScanResult> {
+    return this.http.post<ScanResult>(`${this.apiUrl}/scanner/scan`, {});
   }
 }

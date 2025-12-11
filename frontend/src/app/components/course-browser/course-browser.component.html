@@ -1,4 +1,4 @@
-﻿<div class="app-container">
+<div class="app-container">
   <app-header></app-header>
   
   <div class="main-content">
@@ -9,7 +9,7 @@
     
     <div class="content-area">
       <div class="breadcrumb">
-        <span>ðŸ  Home</span>
+        <span>Home</span>
         <span *ngIf="selectedCategory"> > Category</span>
       </div>
       
@@ -21,18 +21,18 @@
       </div>
       
       <div *ngIf="!loading && courses.length === 0" class="no-courses">
-        <p>ðŸ“­ No courses found</p>
+        <p>No courses found</p>
         <small>Add courses by scanning your file system from the admin panel</small>
       </div>
       
       <div class="courses-grid" *ngIf="!loading && courses.length > 0">
         <div class="course-card" *ngFor="let course of courses" (click)="openCourse(course.id)">
-          <div class="course-icon">ðŸŽ“</div>
+          <div class="course-icon"></div>
           <h3>{{ course.title }}</h3>
           <p>{{ course.description || 'No description available' }}</p>
           <div class="course-meta">
-            <span>ðŸ“ {{ course.total_lessons }} lessons</span>
-            <span>â±ï¸ {{ formatDuration(course.total_duration) }}</span>
+            <span>{{ course.total_lessons }} lessons</span>
+            <span>{{ formatDuration(course.total_duration) }}</span>
           </div>
         </div>
       </div>

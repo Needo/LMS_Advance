@@ -1,0 +1,54 @@
+<div class="app-container">
+  <app-header></app-header>
+
+  <div class="main-content">
+    <app-sidebar [categories]="[]" (categorySelected)="onCategorySelected($event)"></app-sidebar>
+
+    <div class="content-area">
+      <div class="heading">
+        <h1>Admin – Content Scanner</h1>
+        <button class="primary"
+                (click)="rescan()"
+                [disabled]="loading || (currentUser && !currentUser.is_admin)">
+          {{ loading ? 'Scanning…' : 'Rescan Content' }}
+        </button>
+      </div>
+
+      <div *ngIf="currentUser && !currentUser.is_admin" class="alert">
+        You are signed in but not an admin. Scanning is disabled.
+      </div>
+
+      <div *ngIf="scanResult" class="scan-result">
+        <strong>{{ scanResult.message }}</strong>
+        <div class="stats">
+          <span>Categories: +{{ scanResult.categories_created }}</span>
+          <span>Courses: +{{ scanResult.courses_created }} / updated {{ scanResult.courses_updated }}</span>
+          <span>Modules: +{{ scanResult.modules_created }}</span>
+          <span>Lessons: +{{ scanResult.lessons_created }}</span>
+        </div>
+      </div>
+
+      <div class="tree" *ngFor="let course of courseTree">
+        <div class="course-node">
+          <div class="title">{{ course.title }}</div>
+          <div class="meta">{{ course.file_path }}</div>
+        </div>
+
+        <ng-container *ngFor="let module of course.modules">
+          <div class="module-node" [style.paddingLeft.px]="16">
+            <div class="title">{{ module.title }}</div>
+            <div class="meta">{{ module.file_path }}</div>
+          </div>
+
+          <div class="lesson-node" *ngFor="let lesson of module.lessons" [style.paddingLeft.px]="32">
+            {{ lesson.title }} ({{ lesson.file_type }})
+            <small class="meta">{{ lesson.file_path }}</small>
+          </div>
+
+          <app-module-branch *ngIf="module.children.length" [module]="module" [depth]="2"></app-module-branch>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>
+

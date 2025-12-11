@@ -57,12 +57,30 @@ class Lesson(LessonBase):
     class Config:
         from_attributes = True
 
+class LessonNode(LessonBase):
+    id: int
+    order: int
+    duration: Optional[int] = None
+    
+    class Config:
+        from_attributes = True
+
 class ModuleBase(BaseModel):
     title: str
 
 class Module(ModuleBase):
     id: int
     order: int
+    
+    class Config:
+        from_attributes = True
+
+class ModuleNode(ModuleBase):
+    id: int
+    order: int
+    file_path: Optional[str] = None
+    lessons: List[LessonNode] = []
+    children: List["ModuleNode"] = []
     
     class Config:
         from_attributes = True
@@ -80,3 +98,18 @@ class Course(CourseBase):
     
     class Config:
         from_attributes = True
+
+class CourseTree(Course):
+    file_path: str
+    modules: List[ModuleNode] = []
+
+class ScanResult(BaseModel):
+    success: bool
+    message: str
+    courses_created: int
+    courses_updated: int
+    modules_created: int
+    lessons_created: int
+    categories_created: int
+
+ModuleNode.update_forward_refs()

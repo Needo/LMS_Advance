@@ -1,11 +1,13 @@
-﻿<header class="header">
+<header class="header">
   <div class="header-left">
     <h1>LMS System</h1>
+    <a routerLink="/courses">Courses</a>
+    <a *ngIf="currentUser?.is_admin" routerLink="/admin">Admin</a>
   </div>
   
   <div class="header-right">
     <span class="user-name" *ngIf="currentUser">
-      ðŸ‘¤ {{ currentUser.username }}
+      {{ currentUser.username }}
     </span>
     <button class="logout-btn" (click)="logout()">Logout</button>
   </div>
