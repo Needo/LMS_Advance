@@ -1,7 +1,7 @@
 ﻿from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.db.database import engine, Base
-from app.api.routes import auth, users, categories, courses, scanner
+from app.api.routes import auth, users, categories, courses, scanner, files
 
 # Create database tables
 Base.metadata.create_all(bind=engine)
@@ -26,6 +26,7 @@ app.include_router(users.router, prefix="/api/users", tags=["Users"])
 app.include_router(categories.router, prefix="/api/categories", tags=["Categories"])
 app.include_router(courses.router, prefix="/api/courses", tags=["Courses"])
 app.include_router(scanner.router, prefix="/api/scanner", tags=["Scanner"])
+app.include_router(files.router, prefix="/api", tags=["Files"])
 
 @app.get("/")
 def read_root():

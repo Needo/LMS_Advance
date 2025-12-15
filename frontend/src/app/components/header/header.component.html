@@ -1,11 +1,14 @@
 <header class="header">
   <div class="header-left">
     <h1>LMS System</h1>
-    <a routerLink="/courses">Courses</a>
-    <a *ngIf="currentUser?.is_admin" routerLink="/admin">Admin</a>
+    <nav class="nav-links">
+      <a routerLink="/courses" [class.active]="activePage === 'Courses'">Courses</a>
+      <a *ngIf="currentUser?.is_admin" routerLink="/admin" [class.active]="activePage === 'Admin'">Admin</a>
+    </nav>
   </div>
   
   <div class="header-right">
+    <span class="active-page">{{ activePage }}</span>
     <span class="user-name" *ngIf="currentUser">
       {{ currentUser.username }}
     </span>

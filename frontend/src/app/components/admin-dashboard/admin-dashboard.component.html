@@ -2,8 +2,6 @@
   <app-header></app-header>
 
   <div class="main-content">
-    <app-sidebar [categories]="[]" (categorySelected)="onCategorySelected($event)"></app-sidebar>
-
     <div class="content-area">
       <div class="heading">
         <h1>Admin – Content Scanner</h1>
@@ -25,6 +23,24 @@
           <span>Courses: +{{ scanResult.courses_created }} / updated {{ scanResult.courses_updated }}</span>
           <span>Modules: +{{ scanResult.modules_created }}</span>
           <span>Lessons: +{{ scanResult.lessons_created }}</span>
+        </div>
+      </div>
+
+      <div class="courses-table" *ngIf="courseTree.length > 0">
+        <div class="table-header">
+          <div>Course</div>
+          <div>Category</div>
+          <div>Path</div>
+        </div>
+        <div class="table-row" *ngFor="let course of courseTree">
+          <div class="cell title">{{ course.title }}</div>
+          <div class="cell">
+            <select [value]="course.category_id || 0"
+                    (change)="updateCourseCategory(course.id, +$any($event.target).value)">
+              <option *ngFor="let c of categories" [value]="c.id">{{ c.name || 'None' }}</option>
+            </select>
+          </div>
+          <div class="cell path">{{ course.file_path }}</div>
         </div>
       </div>
 

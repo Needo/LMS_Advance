@@ -27,6 +27,12 @@ export class CourseService {
     return this.http.get<Course>(`${this.apiUrl}/courses/${courseId}`);
   }
 
+  updateCourseCategory(courseId: number, categoryId: number | null): Observable<Course> {
+    return this.http.patch<Course>(`${this.apiUrl}/courses/${courseId}/category`, {
+      category_id: categoryId
+    });
+  }
+
   getCourseTree(): Observable<CourseTree[]> {
     return this.http.get<CourseTree[]>(`${this.apiUrl}/courses/tree`);
   }

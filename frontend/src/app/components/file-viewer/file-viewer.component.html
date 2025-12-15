@@ -1,0 +1,161 @@
+<div class="file-viewer" *ngIf="lesson; else noFile">
+  <div class="viewer-header">
+    <h3>{{ lesson.title }}</h3>
+    <div class="file-meta">
+      <span class="file-type">{{ lesson.file_type }}</span>
+      <span class="file-path">{{ lesson.file_path }}</span>
+    </div>
+  </div>
+
+  <div class="viewer-content">
+    <ng-container [ngSwitch]="lesson.file_type">
+      <!-- Video Player -->
+      <div *ngSwitchCase="'video'" class="media-player">
+        <video
+          #videoPlayer
+          class="media-element"
+          controls
+          [src]="getFileUrl()"
+          (loadedmetadata)="onVideoLoaded($event)"
+          (timeupdate)="onTimeUpdate($event)"
+          (durationchange)="onDurationChange($event)"
+          (play)="isPlaying = true"
+          (pause)="isPlaying = false">
+          Your browser does not support the video tag.
+        </video>
+        
+        <div class="media-controls">
+          <button (click)="onPlayPause()" class="control-btn">
+            {{ isPlaying ? '⏸' : '▶' }}
+          </button>
+          <input
+            type="range"
+            min="0"
+            [max]="duration"
+            [value]="currentTime"
+            (input)="onSeek($event)"
+            class="seek-bar">
+          <span class="time-display">
+            {{ formatTime(currentTime) }} / {{ formatTime(duration) }}
+          </span>
+          <label class="volume-control">
+            🔊
+            <input
+              type="range"
+              min="0"
+              max="1"
+              step="0.1"
+              [value]="volume"
+              (input)="onVolumeChange($event)"
+              class="volume-bar">
+          </label>
+          <select [value]="playbackRate" (change)="changePlaybackRate(+$any($event.target).value)" class="speed-select">
+            <option [value]="0.5">0.5x</option>
+            <option [value]="0.75">0.75x</option>
+            <option [value]="1">1x</option>
+            <option [value]="1.25">1.25x</option>
+            <option [value]="1.5">1.5x</option>
+            <option [value]="2">2x</option>
+          </select>
+          <button (click)="onPrev()" class="control-btn">⏮ Prev</button>
+          <button (click)="onNext()" class="control-btn">Next ⏭</button>
+        </div>
+      </div>
+
+      <!-- Audio Player -->
+      <div *ngSwitchCase="'audio'" class="media-player">
+        <audio
+          #audioPlayer
+          class="media-element"
+          controls
+          [src]="getFileUrl()"
+          (loadedmetadata)="onAudioLoaded($event)"
+          (timeupdate)="onTimeUpdate($event)"
+          (durationchange)="onDurationChange($event)"
+          (play)="isPlaying = true"
+          (pause)="isPlaying = false">
+          Your browser does not support the audio tag.
+        </audio>
+        
+        <div class="media-controls">
+          <button (click)="onPlayPause()" class="control-btn">
+            {{ isPlaying ? '⏸' : '▶' }}
+          </button>
+          <input
+            type="range"
+            min="0"
+            [max]="duration"
+            [value]="currentTime"
+            (input)="onSeek($event)"
+            class="seek-bar">
+          <span class="time-display">
+            {{ formatTime(currentTime) }} / {{ formatTime(duration) }}
+          </span>
+          <label class="volume-control">
+            🔊
+            <input
+              type="range"
+              min="0"
+              max="1"
+              step="0.1"
+              [value]="volume"
+              (input)="onVolumeChange($event)"
+              class="volume-bar">
+          </label>
+          <select [value]="playbackRate" (change)="changePlaybackRate(+$any($event.target).value)" class="speed-select">
+            <option [value]="0.5">0.5x</option>
+            <option [value]="0.75">0.75x</option>
+            <option [value]="1">1x</option>
+            <option [value]="1.25">1.25x</option>
+            <option [value]="1.5">1.5x</option>
+            <option [value]="2">2x</option>
+          </select>
+          <button (click)="onPrev()" class="control-btn">⏮ Prev</button>
+          <button (click)="onNext()" class="control-btn">Next ⏭</button>
+        </div>
+      </div>
+
+      <!-- PDF Viewer -->
+      <div *ngSwitchCase="'pdf'" class="pdf-viewer">
+        <iframe
+          [src]="getFileUrl()"
+          class="pdf-frame"
+          frameborder="0">
+        </iframe>
+      </div>
+
+      <!-- HTML Viewer -->
+      <div *ngSwitchCase="'html'" class="pdf-viewer">
+        <iframe
+          [src]="getFileUrl()"
+          class="pdf-frame"
+          frameborder="0">
+        </iframe>
+      </div>
+
+      <!-- Text Viewer -->
+      <div *ngSwitchCase="'txt'" class="file-preview text-preview">
+        <iframe
+          [src]="getFileUrl()"
+          class="pdf-frame"
+          frameborder="0">
+        </iframe>
+      </div>
+
+      <!-- Other file types -->
+      <div *ngSwitchDefault class="file-preview">
+        <div class="preview-message">
+          <p>Preview not available for this file type.</p>
+          <a [href]="getFileUrl()" target="_blank" class="open-link">Open File</a>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>
+
+<ng-template #noFile>
+  <div class="no-file-placeholder">
+    <p>Select a file from the course tree to view</p>
+  </div>
+</ng-template>
+

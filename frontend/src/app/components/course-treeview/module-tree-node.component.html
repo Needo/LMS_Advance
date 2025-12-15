@@ -1,0 +1,34 @@
+<div class="module-tree-item">
+  <div class="tree-node" 
+       [class.has-children]="hasChildren()"
+       (click)="toggleModule()">
+    <span class="expand-icon" 
+          *ngIf="hasChildren()"
+          [class.expanded]="isExpanded()">▶</span>
+    <span class="expand-placeholder" *ngIf="!hasChildren()"></span>
+    <span class="node-label">{{ module.title }}</span>
+  </div>
+  
+  <div *ngIf="isExpanded()" class="tree-children">
+    <!-- Lessons in this module -->
+    <div *ngFor="let lesson of module.lessons" 
+         class="lesson-item"
+         [class.active]="selectedLesson?.id === lesson.id"
+         (click)="selectLesson(lesson)">
+      <span class="lesson-icon">📄</span>
+      <span class="lesson-label">{{ lesson.title }}</span>
+    </div>
+    
+    <!-- Child modules (nested folders) -->
+    <app-module-tree-node
+      *ngFor="let child of module.children"
+      [module]="child"
+      [selectedLesson]="selectedLesson"
+      [expandedModules]="expandedModules"
+      (lessonSelected)="selectLesson($event)"
+      (moduleToggled)="moduleToggled.emit($event)">
+    </app-module-tree-node>
+  </div>
+</div>
+
+

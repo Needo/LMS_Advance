@@ -7,33 +7,73 @@
   color: white;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 
-  h1 {
-    margin: 0;
-    font-size: 1.5em;
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+
+    h1 {
+      margin: 0;
+      font-size: 1.5em;
+      color: white;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 20px;
+
+      a {
+        color: #ecf0f1;
+        text-decoration: none;
+        padding: 8px 15px;
+        border-radius: 4px;
+        transition: background 0.3s;
+        font-size: 15px;
+        font-weight: 500;
+
+        &:hover {
+          background: rgba(255, 255, 255, 0.1);
+        }
+
+        &.active {
+          background: #3498db;
+          color: white;
+        }
+      }
+    }
   }
 
   .header-right {
     display: flex;
     align-items: center;
     gap: 20px;
-  }
 
-  .user-name {
-    font-size: 14px;
-  }
+    .active-page {
+      font-size: 14px;
+      color: #bdc3c7;
+      font-weight: 500;
+      padding-right: 20px;
+      border-right: 1px solid #34495e;
+    }
 
-  .logout-btn {
-    padding: 8px 20px;
-    background: #e74c3c;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 14px;
-    transition: background 0.3s;
+    .user-name {
+      font-size: 14px;
+      color: #ecf0f1;
+    }
 
-    &:hover {
-      background: #c0392b;
+    .logout-btn {
+      padding: 8px 20px;
+      background: #e74c3c;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background 0.3s;
+
+      &:hover {
+        background: #c0392b;
+      }
     }
   }
 }

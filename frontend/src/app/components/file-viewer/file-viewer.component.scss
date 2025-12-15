@@ -1,0 +1,177 @@
+.file-viewer {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+}
+
+.viewer-header {
+  padding: 20px 30px;
+  background: #f8f9fa;
+  border-bottom: 1px solid #dee2e6;
+  
+  h3 {
+    margin: 0 0 10px 0;
+    font-size: 20px;
+    color: #212529;
+  }
+  
+  .file-meta {
+    display: flex;
+    gap: 15px;
+    font-size: 12px;
+    color: #6c757d;
+    
+    .file-type {
+      text-transform: uppercase;
+      font-weight: 600;
+      color: #0d6efd;
+    }
+    
+    .file-path {
+      font-family: monospace;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+}
+
+.viewer-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.media-player {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  background: #000;
+  
+  .media-element {
+    flex: 1;
+    width: 100%;
+    max-height: calc(100vh - 200px);
+    object-fit: contain;
+  }
+  
+  .media-controls {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    
+    .control-btn {
+      padding: 8px 15px;
+      background: #0d6efd;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      
+      &:hover {
+        background: #0b5ed7;
+      }
+      
+      &:disabled {
+        background: #6c757d;
+        cursor: not-allowed;
+      }
+    }
+    
+    .seek-bar {
+      flex: 1;
+      height: 6px;
+      cursor: pointer;
+    }
+    
+    .time-display {
+      min-width: 100px;
+      text-align: center;
+      font-size: 13px;
+      font-family: monospace;
+    }
+    
+    .volume-control {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      
+      .volume-bar {
+        width: 80px;
+        height: 4px;
+        cursor: pointer;
+      }
+    }
+    
+    .speed-select {
+      padding: 6px 10px;
+      border-radius: 4px;
+      border: 1px solid #6c757d;
+      background: white;
+      color: #212529;
+      cursor: pointer;
+    }
+  }
+}
+
+.pdf-viewer {
+  flex: 1;
+  display: flex;
+  
+  .pdf-frame {
+    flex: 1;
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+}
+
+.file-preview {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  
+  .preview-message {
+    text-align: center;
+    
+    p {
+      margin: 0 0 20px 0;
+      color: #6c757d;
+      font-size: 16px;
+    }
+    
+    .open-link {
+      display: inline-block;
+      padding: 12px 24px;
+      background: #0d6efd;
+      color: white;
+      text-decoration: none;
+      border-radius: 4px;
+      font-weight: 500;
+      
+      &:hover {
+        background: #0b5ed7;
+      }
+    }
+  }
+}
+
+.no-file-placeholder {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6c757d;
+  font-size: 16px;
+}
+
+

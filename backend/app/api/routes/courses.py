@@ -2,7 +2,7 @@
 from sqlalchemy.orm import Session
 from typing import List
 from app.db.database import get_db
-from app.models.models import Course, Module, Lesson, User
+from app.models.models import Course, Module, Lesson, User, Category
 from app.schemas.schemas import (
     Course as CourseSchema,
     CourseBase,
@@ -11,6 +11,7 @@ from app.schemas.schemas import (
     LessonNode,
 )
 from app.api.routes.auth import get_current_user
+from fastapi import Body
 
 router = APIRouter()
 
@@ -29,6 +30,31 @@ def get_course(course_id: int, db: Session = Depends(get_db)):
     course = db.query(Course).filter(Course.id == course_id).first()
     if not course:
         raise HTTPException(status_code=404, detail="Course not found")
+    return course
+
+@router.patch("/{course_id}/category", response_model=CourseSchema)
+def update_course_category(
+    course_id: int,
+    payload: dict = Body(...),
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    if not current_user.is_admin:
+        raise HTTPException(status_code=403, detail="Not enough permissions")
+
+    category_id = payload.get("category_id")
+    course = db.query(Course).filter(Course.id == course_id).first()
+    if not course:
+        raise HTTPException(status_code=404, detail="Course not found")
+
+    if category_id is not None:
+        category = db.query(Category).filter(Category.id == category_id).first()
+        if not category:
+            raise HTTPException(status_code=404, detail="Category not found")
+        course.category_id = category_id
+
+    db.commit()
+    db.refresh(course)
     return course
 
 @router.get("/tree", response_model=List[CourseTree])

@@ -1,0 +1,33 @@
+<div class="course-treeview">
+  <div class="tree-header">
+    <h3>Courses</h3>
+  </div>
+  
+  <div *ngIf="courses.length === 0" class="empty-state">
+    <p>No courses available</p>
+    <small>Run a scan in Admin panel to add courses</small>
+  </div>
+
+  <div class="tree-content">
+    <div *ngFor="let course of courses" class="tree-item course-item">
+      <div class="tree-node" (click)="toggleCourse(course.id)">
+        <span class="expand-icon" [class.expanded]="isCourseExpanded(course.id)">▶</span>
+        <span class="node-label">{{ course.title }}</span>
+      </div>
+      
+      <div *ngIf="isCourseExpanded(course.id)" class="tree-children">
+        <ng-container *ngFor="let module of course.modules">
+          <app-module-tree-node
+            [module]="module"
+            [selectedLesson]="selectedLesson"
+            [expandedModules]="expandedModules"
+            (lessonSelected)="selectLesson($event)"
+            (moduleToggled)="toggleModule($event)">
+          </app-module-tree-node>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>
+
+
